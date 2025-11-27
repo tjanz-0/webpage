@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Digital Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #111111;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        system-ui, sans-serif;
+    }
+
+    body.no-scroll {         
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+  
+      width: 100%;
+      max-width: 1200px;      
+      padding: 28px 40px;       
+  
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(6px);
+    }
+
+
+    .site-title {
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 11px;
+    }
+
+    .nav-links a {
+      opacity: 0.6;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+    }
+    
+    
+
+    main {
+      padding-top: 120px;      
+      padding-bottom: 120px;
+    }
+
+    .content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+
+
+
+    .work-section {
+      margin-bottom: 160px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 24px;
+      justify-items: center;
+      align-items: flex-start;
+    }
+
+    .gallery-item {
+      width: 100%;
+      max-width: 210px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .gallery-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.25s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.03);
+    }
+
+    .about-section {
+      max-width: 520px;
+      margin: 0 0 0 auto;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #444444;
+    }
+
+    .about-heading {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 18px;
+      opacity: 0.6;
+    }
+
+    .about-section p {
+      margin: 0 0 12px;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 50;
+    }
+
+    .lightbox.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-inner {
+      position: relative;
+      width: 70vw;
+      max-width: 1100px;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      color: #f5f5f5;
+      font-size: 13px;
+    }
+
+    .lightbox-media {
+      flex: 3;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden; 
+      background: transparent;
+    }
+
+    .lightbox-image {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      transform-origin: center center;
+      transition: transform 0.1s ease-out;
+    }
+
+    .lightbox-meta {
+      flex: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 20px;
+      padding-bottom: 12px;
+    }
+
+    .lightbox-title {
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .lightbox-description {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #d0d0d0;
+      white-space: pre-wrap;
+    }
+
+    .zoom-controls {
+      margin-top: 20px;
+      display: inline-flex;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .zoom-button {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 999px;
+      padding: 4px 10px;
+      color: #f5f5f5;
+      cursor: pointer;
+    }
+
+    .zoom-button:hover {
+      border-color: #ffffff;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -32px;
+      right: -4px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #f5f5f5;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    .lightbox-close:hover {
+      opacity: 1;
+    }
+
+    @media (max-width: 1024px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .lightbox-inner {
+        width: 85vw;
+        height: 70vh;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .site-header {
+        padding: 20px 18px;
+      }
+
+      .content {
+        padding: 0 18px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      main {
+        padding-top: 96px;
+      }
+
+      .lightbox-inner {
+        flex-direction: column;
+        width: 90vw;
+        height: 80vh;
+        gap: 16px;
+      }
+
+      .lightbox-meta {
+        width: 100%;
+        padding-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-title">THORGE JANZ</div>
+    <nav class="nav-links">
+      <a href="#work">work</a>
+      <a href="#about">about</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content">
+      <!-- Work / Gallery -->
+      <section id="work" class="work-section">
+        <div class="gallery-grid">
+          <!-- Add title/description via data-attributes -->
+          <div class="gallery-item">
+            <img
+              src="bild_1.jpg"
+              alt="Artwork 1"
+              data-title="(No title)"
+              data-description="Study of Café Hotel de L'Europe by Max Beckmann. 
+My aim was to portray the two most prominent figures from the original painting in a slightly varied composition and color scheme. 
+The background I kept neutral, the white pillars are inspired by the reference as well. "
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_2.png"
+              alt="Artwork 2"
+              data-title="Avocados"
+              data-description="Avocado cut in half on a plate. 
+The reference for this was an image I found on the internet."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_3.png"
+              alt="Artwork 3"
+              data-title="Pferd mit Bierkasten"
+              data-description="Oil painting of a horse and some beer. 
+In it combined is a study of Blaues Pferd by Franz Marc set against a nice, cold crate of beer. 
+Painted this as a housewarming gift to my sister and her boyfriend."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_4.png"
+              alt="Artwork 4"
+              data-title="(No title)"
+              data-description="Still life of a candle, some red wine and fruits. 
+One of my first attempts to paint from real life subjects. 
+The composition as shown was set up with real props in my old bedroom."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_5.png"
+              alt="Artwork 5"
+              data-title="(No title)"
+              data-description="Still life of an apple, a bottle and some flowers. 
+A study of cubist paintings, painted from an actual composition I set up in my bedroom as well."
+            />
+          </div>
+
+          <div class="gallery-item">
+            <img
+              src="bild_6.png"
+              alt="Artwork 6"
+              data-title="(No title)"
+              data-description="Person in front of a purple background. 
+Part of a small study practicing expressionist portraits, inspired by an artist from the internet (sadly, I forgot the name)."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_7.png"
+              alt="Artwork 7"
+              data-title="Red monster"
+              data-description="Abstract depiction of a red monster. 
+Painted this as part of a project on abstract people projections."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_8.png"
+              alt="Artwork 8"
+              data-title="(No title)"
+              data-description="Still life of apples on a white tables cloth. 
+Painted from a reference image that I found on the internet."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_9.png"
+              alt="Artwork 9"
+              data-title="(No title)"
+              data-description="Still life of a knife and pears on a plate. 
+Painted from a reference image that I found on the internet."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_12.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Still life of some grapefruits on a staircase. 
+Painted from a reference image that I found on the internet."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_11.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Painting of a green apple. 
+There's really not more to it."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_13.png"
+              alt="Artwork 10"
+              data-title="Bedroom in Noa Island Retreat, Zrće Beach"
+              data-description="Charcoal drawing of my room in Noa Island in Zrće Beach, Croatia.
+I was there as part of my high school graduation trip. 
+By the way: although most people here were very fun and Zrće is great for partying, there's also a lot of beautiful nature in the area (Lun, Pag or the Velebit, for example)."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="skizze_1.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Abstract charcoal portrait, part 1/4 on a series on abstract people depictions. 
+All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, I didn't come up with them."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="skizze_2.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Abstract charcoal portrait, part 2/4 on a series on abstract people depictions. 
+All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, I didn't come up with them."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="skizze_3.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Abstract charcoal portrait, part 3/4 on a series on abstract people depictions. 
+All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, I didn't come up with them."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="skizze_4.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Abstract charcoal portrait, part 4/4 on a series on abstract people depictions. 
+All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, I didn't come up with them."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="grafiti_1.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Practicing grafiti tags 1/2. 
+
+Legal Disclaimer: 
+As these are found on various infrastructure in my hometown, I should state that these are definetly not by me. I found them, was inspired by them and tried to copy them on paper as best I could."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="grafiti_2.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Practicing grafiti tags 2/2. 
+
+Legal Disclaimer: 
+As these are found on various infrastructure in my hometown, I should state that these are definetly not by me. I found them, was inspired by them and tried to copy them on paper as best I could."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="grafiti_3.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Practicing large grafiti tags 1/2. 
+
+Legal Disclaimer: 
+As these are found on various infrastructure in my hometown, I should state that these are definetly not by me. I found them, was inspired by them and tried to copy them on paper as best I could."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="grafiti_4.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Practicing large grafiti tags 2/2. 
+
+Legal Disclaimer: 
+As these are found on various infrastructure in my hometown, I should state that these are definetly not by me. I found them, was inspired by them and tried to copy them on paper as best I could."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="collage_1.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Print Collage of Coca Cola cans.
+Study on the print collages of Andy Warhol (1/2)."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="collage_2.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Print Collage of Coca Cola cans.
+Study on the print collages of Andy Warhol (2/2)."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="design_1.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Design idea for a T-shirt. 
+I actually created a lot of designs like this (even printed some of them on actual fabric)."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="color_skizze_4.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Study on abstract portraits. Also heavily inspired from artists I found on the internet."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="color_skizze_1.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Person in front of a red background, another study on abstract portraits."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="portrait_11.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Charcoal drawing, study on realistic portraits 1/2."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="portrait_21.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-description="Charcoal drawing, study on realistic portraits 2/2."
+            />
+          </div>
+      </section>
+
+
+      <section id="about" class="about-section">
+        <div class="about-heading">About</div>
+          22 year old physics student, currently based in Heidelberg.<div>
+          Picks up a brush, occasionally. Doesn't have a lot of original ideas, is somewhat 
+adequate at copying the style of other artists.
+     </div>
+  </main>
+
+
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-inner">
+      <span class="lightbox-close" id="lightboxClose">close</span>
+
+      <div class="lightbox-media" id="lightboxMedia">
+        <img
+          src=""
+          alt="Artwork enlarged"
+          class="lightbox-image"
+          id="lightboxImage"
+        />
+      </div>
+
+      <div class="lightbox-meta">
+        <div>
+          <div class="lightbox-title" id="lightboxTitle"></div>
+          <div class="lightbox-description" id="lightboxDescription"></div>
+        </div>
+
+        <div class="zoom-controls">
+          <button class="zoom-button" id="zoomOut">− zoom out</button>
+          <button class="zoom-button" id="zoomReset">reset</button>
+          <button class="zoom-button" id="zoomIn">+ zoom in</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImage = document.getElementById("lightboxImage");
+      const lightboxClose = document.getElementById("lightboxClose");
+      const lightboxTitle = document.getElementById("lightboxTitle");
+      const lightboxDescription = document.getElementById("lightboxDescription");
+      const lightboxMedia = document.getElementById("lightboxMedia");
+
+      const zoomInBtn = document.getElementById("zoomIn");
+      const zoomOutBtn = document.getElementById("zoomOut");
+      const zoomResetBtn = document.getElementById("zoomReset");
+
+      let currentZoom = 1;
+      const minZoom = 1;
+      const maxZoom = 3;
+      const zoomStep = 0.25;
+
+      function applyZoom() {
+        lightboxImage.style.transform = `scale(${currentZoom})`;
+
+        if (currentZoom > 1) {
+          lightboxMedia.style.overflow = "auto"; // allow scroll inside image area
+          lightboxImage.style.cursor = "grab";
+        } else {
+          lightboxMedia.scrollTop = 0;
+          lightboxMedia.scrollLeft = 0;
+          lightboxMedia.style.overflow = "hidden";
+          lightboxImage.style.cursor = "default";
+        }
+      }
+
+      function resetZoom() {
+        currentZoom = 1;
+        applyZoom();
+      }
+
+      // Open
+      document.addEventListener("click", function (event) {
+        const img = event.target.closest(".gallery-item img");
+        if (!img) return;
+
+        lightboxImage.src = img.src;
+        lightboxTitle.textContent = img.dataset.title || img.alt || "";
+        lightboxDescription.textContent = img.dataset.description || "";
+
+        resetZoom();
+        lightbox.classList.add("is-visible");
+        document.body.classList.add("no-scroll");
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove("is-visible");
+        lightboxImage.src = "";
+        document.body.classList.remove("no-scroll");
+      }
+
+      lightboxClose.addEventListener("click", function (event) {
+        event.stopPropagation();
+        closeLightbox();
+      });
+
+      lightbox.addEventListener("click", function (event) {
+        if (event.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          closeLightbox();
+        }
+      });
+
+      // Zoom controls
+      zoomInBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        currentZoom = Math.min(maxZoom, currentZoom + zoomStep);
+        applyZoom();
+      });
+
+      zoomOutBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        currentZoom = Math.max(minZoom, currentZoom - zoomStep);
+        applyZoom();
+      });
+
+      zoomResetBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        resetZoom();
+      });
+    })();
+  </script>
+</body>
+</html>
+
+
