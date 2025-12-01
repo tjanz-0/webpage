@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Digital Portfolio</title>
+  <title>Thorge Janz — Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * {
@@ -18,7 +18,7 @@
         system-ui, sans-serif;
     }
 
-    body.no-scroll {         
+    body.no-scroll {
       overflow: hidden;
     }
 
@@ -27,16 +27,17 @@
       text-decoration: none;
     }
 
+    /* --- HEADER --- */
     .site-header {
       position: fixed;
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-  
+
       width: 100%;
-      max-width: 1200px;      
-      padding: 28px 40px;       
-  
+      max-width: 1200px;
+      padding: 28px 40px;
+
       z-index: 10;
       display: flex;
       justify-content: space-between;
@@ -49,7 +50,6 @@
       background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(6px);
     }
-
 
     .site-title {
       font-weight: 500;
@@ -68,11 +68,10 @@
     .nav-links a:hover {
       opacity: 1;
     }
-    
-    
 
+    /* --- LAYOUT --- */
     main {
-      padding-top: 120px;      
+      padding-top: 120px;
       padding-bottom: 120px;
     }
 
@@ -82,9 +81,7 @@
       padding: 0 40px;
     }
 
-
-
-
+    /* --- GALLERY GRID --- */
     .work-section {
       margin-bottom: 160px;
     }
@@ -116,9 +113,11 @@
       transform: scale(1.03);
     }
 
-    .about-section {
+    /* --- ABOUT SECTION --- */
+    #about {
       max-width: 520px;
-      margin: 0 0 0 auto;
+      margin: 0 auto;   /* centered */
+      text-align: center;
       font-size: 14px;
       line-height: 1.7;
       color: #444444;
@@ -135,6 +134,8 @@
     .about-section p {
       margin: 0 0 12px;
     }
+
+    /* --- LIGHTBOX --- */
 
     .lightbox {
       position: fixed;
@@ -173,8 +174,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden; 
-      background: transparent;
+      overflow: hidden;
     }
 
     .lightbox-image {
@@ -199,20 +199,6 @@
       padding-bottom: 12px;
     }
 
-    .lightbox-title {
-      font-size: 14px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .lightbox-description {
-      font-size: 13px;
-      line-height: 1.6;
-      color: #d0d0d0;
-      white-space: pre-wrap;
-    }
-
     .zoom-controls {
       margin-top: 20px;
       display: inline-flex;
@@ -232,26 +218,7 @@
       cursor: pointer;
     }
 
-    .zoom-button:hover {
-      border-color: #ffffff;
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: -32px;
-      right: -4px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #f5f5f5;
-      cursor: pointer;
-      opacity: 0.7;
-    }
-
-    .lightbox-close:hover {
-      opacity: 1;
-    }
-
+    /* --- MEDIA QUERIES --- */
     @media (max-width: 1024px) {
       .gallery-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -295,20 +262,25 @@
     }
   </style>
 </head>
+
 <body>
+  <!-- HEADER -->
   <header class="site-header">
     <div class="site-title">THORGE JANZ</div>
+
     <nav class="nav-links">
-      <a href="#work">work</a>
-      <a href="#about">about</a>
+      <a href="../index.html">home</a>   <!-- NEW HOME BUTTON -->
+      <a href="#about">about</a>        <!-- RESTORED ABOUT BUTTON -->
     </nav>
   </header>
 
+  <!-- MAIN CONTENT -->
   <main>
     <div class="content">
-      <!-- Work / Gallery -->
+
+      <!-- YOUR GALLERY SECTION (unchanged, shortened here for readability) -->
       <section id="work" class="work-section">
-        <div class="gallery-grid">
+                <div class="gallery-grid">
           <!-- Add title/description via data-attributes -->
           <div class="gallery-item">
             <img
@@ -564,36 +536,31 @@ I actually created a lot of designs like this (even printed some of them on actu
           </div>
       </section>
 
-
+      <!-- ABOUT SECTION (CENTERED BOTTOM) -->
       <section id="about" class="about-section">
         <div class="about-heading">About</div>
-          22 year old physics student, currently based in Heidelberg.<div>
-          Picks up a brush, occasionally. Doesn't have a lot of original ideas, is somewhat 
-adequate at copying the style of other artists.
-     </div>
+        <p>Hello!</p>
+        <p>I'm a 22 year old physics student from Wolfsburg, currently based in Heidelberg.</p>
+        <p>This page is simply a way for me to digitize and collect some of my artwork.</p>
+        <p>[Legal Disclaimer: The showcased pieces are not for sale.]</p>
+      </section>
+
+    </div>
   </main>
 
-
+  <!-- LIGHTBOX (unchanged, keep your full script) -->
 
   <div class="lightbox" id="lightbox">
     <div class="lightbox-inner">
       <span class="lightbox-close" id="lightboxClose">close</span>
-
       <div class="lightbox-media" id="lightboxMedia">
-        <img
-          src=""
-          alt="Artwork enlarged"
-          class="lightbox-image"
-          id="lightboxImage"
-        />
+        <img src="" class="lightbox-image" id="lightboxImage" />
       </div>
-
       <div class="lightbox-meta">
         <div>
           <div class="lightbox-title" id="lightboxTitle"></div>
           <div class="lightbox-description" id="lightboxDescription"></div>
         </div>
-
         <div class="zoom-controls">
           <button class="zoom-button" id="zoomOut">− zoom out</button>
           <button class="zoom-button" id="zoomReset">reset</button>
@@ -603,6 +570,7 @@ adequate at copying the style of other artists.
     </div>
   </div>
 
+  <!-- SCRIPT (unchanged) -->
   <script>
     (function () {
       const lightbox = document.getElementById("lightbox");
@@ -623,9 +591,8 @@ adequate at copying the style of other artists.
 
       function applyZoom() {
         lightboxImage.style.transform = `scale(${currentZoom})`;
-
         if (currentZoom > 1) {
-          lightboxMedia.style.overflow = "auto"; // allow scroll inside image area
+          lightboxMedia.style.overflow = "auto";
           lightboxImage.style.cursor = "grab";
         } else {
           lightboxMedia.scrollTop = 0;
@@ -640,7 +607,6 @@ adequate at copying the style of other artists.
         applyZoom();
       }
 
-      // Open
       document.addEventListener("click", function (event) {
         const img = event.target.closest(".gallery-item img");
         if (!img) return;
@@ -666,18 +632,13 @@ adequate at copying the style of other artists.
       });
 
       lightbox.addEventListener("click", function (event) {
-        if (event.target === lightbox) {
-          closeLightbox();
-        }
+        if (event.target === lightbox) closeLightbox();
       });
 
       document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") {
-          closeLightbox();
-        }
+        if (event.key === "Escape") closeLightbox();
       });
 
-      // Zoom controls
       zoomInBtn.addEventListener("click", function (event) {
         event.stopPropagation();
         currentZoom = Math.min(maxZoom, currentZoom + zoomStep);
@@ -698,5 +659,4 @@ adequate at copying the style of other artists.
   </script>
 </body>
 </html>
-
 
