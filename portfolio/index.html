@@ -27,6 +27,15 @@
       text-decoration: none;
     }
 
+    .section-heading {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 40px;
+      opacity: 0.6;
+      text-align: center;
+    }
+
     /* --- HEADER --- */
     .site-header {
       position: fixed;
@@ -83,7 +92,7 @@
 
     /* --- GALLERY GRID --- */
     .work-section {
-      margin-bottom: 160px;
+      margin-bottom: 60px; /* Reduced to sit closer to the text below it */
     }
 
     .gallery-grid {
@@ -113,10 +122,84 @@
       transform: scale(1.03);
     }
 
+    /* ---- VIDEO SECTION ---- */
+    .video-section {
+      max-width: 1200px;
+      margin: 0 auto 60px; /* Gap between video and its text */
+      padding: 0 40px;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding-top: 56.25%; /* 16:9 ratio */
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+      background: #000;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .video-thumb {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-play-button {
+      position: relative;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 14px 0 14px 22px;
+      border-color: transparent transparent transparent rgba(255,255,255,0.9);
+      filter: drop-shadow(0 0 6px rgba(0,0,0,0.5));
+    }
+
+    .video-iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* --- TEXT SECTIONS --- */
+    
+    /* General styling for the new text blocks */
+    .section-text {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #525252;
+      text-align: left;
+    }
+
+    /* 1. Text under Artworks (Aligns with 1200px container) */
+    .artwork-text-block {
+      margin-top: 0; 
+      margin-bottom: 200px; /* Large gap before Video section starts */
+      /* It inherits the 1200px width and padding from .content, aligning with artworks */
+    }
+
+    /* 2. Text under Video (Aligns with 900px video) */
+    .video-text-block {
+      max-width: 900px; /* Restrict width to match video player */
+      margin: 0 auto 140px; /* Center it, gap before About */
+      padding: 0; /* No extra padding, aligns with video edge */
+      margin-bottom: 200px;
+    }
+
+
     /* --- ABOUT SECTION --- */
     #about {
       max-width: 520px;
-      margin: 0 auto;   /* centered */
+      margin: 0 auto;   
       text-align: center;
       font-size: 14px;
       line-height: 1.7;
@@ -136,7 +219,6 @@
     }
 
     /* --- LIGHTBOX --- */
-
     .lightbox {
       position: fixed;
       inset: 0;
@@ -218,6 +300,22 @@
       cursor: pointer;
     }
 
+    .lightbox-close {
+      position: absolute;
+      left: 0;           
+      top: 0;             
+      transform: translate(-100%, 0); 
+      padding-right: 4px; 
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+    }
+
+    .lightbox-close:hover {
+      opacity: 1;
+    }
+
     /* --- MEDIA QUERIES --- */
     @media (max-width: 1024px) {
       .gallery-grid {
@@ -264,32 +362,27 @@
 </head>
 
 <body>
-  <!-- HEADER -->
   <header class="site-header">
     <div class="site-title">THORGE JANZ</div>
 
     <nav class="nav-links">
-      <a href="../index.html">home</a>   <!-- NEW HOME BUTTON -->
-      <a href="#about">about</a>        <!-- RESTORED ABOUT BUTTON -->
+      <a href="../index.html">home</a>
+      <a href="#about">about</a>
     </nav>
   </header>
 
-  <!-- MAIN CONTENT -->
   <main>
     <div class="content">
 
-      <!-- YOUR GALLERY SECTION (unchanged, shortened here for readability) -->
+      <div class="section-heading">Paintings, Designs and Drawings</div>
       <section id="work" class="work-section">
-                <div class="gallery-grid">
-          <!-- Add title/description via data-attributes -->
+        <div class="gallery-grid">
           <div class="gallery-item">
             <img
               src="bild_1.jpg"
               alt="Artwork 1"
               data-title="(No title)"
-              data-description="Study of Café Hotel de L'Europe by Max Beckmann. 
-My aim was to portray the two most prominent figures from the original painting in a slightly varied composition and color scheme. 
-The background I kept neutral, the white pillars are inspired by the reference as well. "
+              data-description="Study of Café Hotel de L'Europe by Max Beckmann. My aim was to portray the two most prominent figures from the original painting in a slightly varied composition and color scheme. The background I kept neutral, the white pillars are inspired by the reference as well."
             />
           </div>
           <div class="gallery-item">
@@ -297,8 +390,7 @@ The background I kept neutral, the white pillars are inspired by the reference a
               src="bild_2.png"
               alt="Artwork 2"
               data-title="Avocados"
-              data-description="Avocado cut in half on a plate. 
-The reference for this was an image I found on the internet."
+              data-description="Avocado cut in half on a plate. The reference for this was an image I found on the internet."
             />
           </div>
           <div class="gallery-item">
@@ -306,9 +398,7 @@ The reference for this was an image I found on the internet."
               src="bild_3.png"
               alt="Artwork 3"
               data-title="Pferd mit Bierkasten"
-              data-description="Oil painting of a horse and some beer. 
-In it combined is a study of Blaues Pferd by Franz Marc set against a nice, cold crate of beer. 
-Painted this as a housewarming gift to my sister and her boyfriend."
+              data-description="Oil painting of a horse and some beer. In it combined is a study of Blaues Pferd by Franz Marc set against a nice, cold crate of beer. Painted this as a housewarming gift to my sister and her boyfriend."
             />
           </div>
           <div class="gallery-item">
@@ -316,9 +406,7 @@ Painted this as a housewarming gift to my sister and her boyfriend."
               src="bild_4.png"
               alt="Artwork 4"
               data-title="(No title)"
-              data-description="Still life of a candle, some red wine and fruits. 
-One of my first attempts to paint from real life subjects. 
-The composition as shown was set up with real props in my old bedroom."
+              data-description="Still life of a candle, some red wine and fruits. One of my first attempts to paint from real life subjects. The composition as shown was set up with real props in my old bedroom."
             />
           </div>
           <div class="gallery-item">
@@ -326,18 +414,15 @@ The composition as shown was set up with real props in my old bedroom."
               src="bild_5.png"
               alt="Artwork 5"
               data-title="(No title)"
-              data-description="Still life of an apple, a bottle and some flowers. 
-A study of cubist paintings, painted from an actual composition I set up in my bedroom as well."
+              data-description="Still life of an apple, a bottle and some flowers. A study of cubist paintings, painted from an actual composition I set up in my bedroom as well."
             />
           </div>
-
           <div class="gallery-item">
             <img
               src="bild_6.png"
               alt="Artwork 6"
               data-title="(No title)"
-              data-description="Person in front of a purple background. 
-Part of a small study practicing expressionist portraits, inspired by an artist from the internet (sadly, I forgot the name)."
+              data-description="Person in front of a purple background. Part of a small study practicing expressionist portraits, inspired by an artist from the internet (sadly, I forgot the name)."
             />
           </div>
           <div class="gallery-item">
@@ -345,8 +430,7 @@ Part of a small study practicing expressionist portraits, inspired by an artist 
               src="bild_7.png"
               alt="Artwork 7"
               data-title="Red monster"
-              data-description="Abstract depiction of a red monster. 
-Painted this as part of a project on abstract people projections."
+              data-description="Abstract depiction of a red monster. Painted this as part of a project on abstract people projections."
             />
           </div>
           <div class="gallery-item">
@@ -354,8 +438,7 @@ Painted this as part of a project on abstract people projections."
               src="bild_8.png"
               alt="Artwork 8"
               data-title="(No title)"
-              data-description="Still life of apples on a white tables cloth. 
-Painted from a reference image that I found on the internet."
+              data-description="Still life of apples on a white tables cloth. Painted from a reference image that I found on the internet."
             />
           </div>
           <div class="gallery-item">
@@ -363,8 +446,7 @@ Painted from a reference image that I found on the internet."
               src="bild_9.png"
               alt="Artwork 9"
               data-title="(No title)"
-              data-description="Still life of a knife and pears on a plate. 
-Painted from a reference image that I found on the internet."
+              data-description="Still life of a knife and pears on a plate. Painted from a reference image that I found on the internet."
             />
           </div>
           <div class="gallery-item">
@@ -372,8 +454,7 @@ Painted from a reference image that I found on the internet."
               src="bild_12.png"
               alt="Artwork 10"
               data-title="(No title)"
-              data-description="Still life of some grapefruits on a staircase. 
-Painted from a reference image that I found on the internet."
+              data-description="Still life of some grapefruits on a staircase. Painted from a reference image that I found on the internet."
             />
           </div>
           <div class="gallery-item">
@@ -381,8 +462,7 @@ Painted from a reference image that I found on the internet."
               src="bild_11.png"
               alt="Artwork 10"
               data-title="(No title)"
-              data-description="Painting of a green apple. 
-There's really not more to it."
+              data-description="Painting of a green apple. There's really not more to it."
             />
           </div>
           <div class="gallery-item">
@@ -390,9 +470,7 @@ There's really not more to it."
               src="bild_13.png"
               alt="Artwork 10"
               data-title="Bedroom in Noa Island Retreat, Zrće Beach"
-              data-description="Charcoal drawing of my room in Noa Island in Zrće Beach, Croatia.
-I was there as part of my high school graduation trip. 
-By the way: although most people here were very fun and Zrće is great for partying, there's also a lot of beautiful nature in the area (Lun, Pag or the Velebit, for example)."
+              data-description="Charcoal drawing of my room in Noa Island in Zrće Beach, Croatia. I was there as part of my high school graduation trip. By the way: although most people here were very fun and Zrće is great for partying, there's also a lot of beautiful nature in the area (Lun, Pag or the Velebit, for example)."
             />
           </div>
           <div class="gallery-item">
@@ -400,8 +478,7 @@ By the way: although most people here were very fun and Zrće is great for party
               src="skizze_1.png"
               alt="Artwork 10"
               data-title="(No title)"
-              data-description="Abstract charcoal portrait, part 1/4 on a series on abstract people depictions. 
-All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, I didn't come up with them."
+              data-description="Abstract charcoal portrait, part 1/4 on a series on abstract people depictions. All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, I didn't come up with them."
             />
           </div>
           <div class="gallery-item">
@@ -409,8 +486,7 @@ All drawings from this series are a study of an artist I found on the internet (
               src="skizze_2.png"
               alt="Artwork 10"
               data-title="(No title)"
-              data-description="Abstract charcoal portrait, part 2/4 on a series on abstract people depictions. 
-All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, I didn't come up with them."
+              data-description="Abstract charcoal portrait, part 2/4 on a series on abstract people depictions. All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, I didn't come up with them."
             />
           </div>
           <div class="gallery-item">
@@ -418,8 +494,7 @@ All drawings from this series are a study of an artist I found on the internet (
               src="skizze_3.png"
               alt="Artwork 10"
               data-title="(No title)"
-              data-description="Abstract charcoal portrait, part 3/4 on a series on abstract people depictions. 
-All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, I didn't come up with them."
+              data-description="Abstract charcoal portrait, part 3/4 on a series on abstract people depictions. All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, I didn't come up with them."
             />
           </div>
           <div class="gallery-item">
@@ -427,8 +502,7 @@ All drawings from this series are a study of an artist I found on the internet (
               src="skizze_4.png"
               alt="Artwork 10"
               data-title="(No title)"
-              data-description="Abstract charcoal portrait, part 4/4 on a series on abstract people depictions. 
-All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, I didn't come up with them."
+              data-description="Abstract charcoal portrait, part 4/4 on a series on abstract people depictions. All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, I didn't come up with them."
             />
           </div>
           <div class="gallery-item">
@@ -436,10 +510,7 @@ All drawings from this series are a study of an artist I found on the internet (
               src="grafiti_1.png"
               alt="Artwork 10"
               data-title="(No title)"
-              data-description="Practicing grafiti tags 1/2. 
-
-Legal Disclaimer: 
-As these are found on various infrastructure in my hometown, I should state that these are definetly not by me. I found them, was inspired by them and tried to copy them on paper as best I could."
+              data-description="Practicing grafiti tags 1/2. Legal Disclaimer: As these are found on various infrastructure in my hometown, I should state that these are definetly not by me. I found them, was inspired by them and tried to copy them on paper as best I could."
             />
           </div>
           <div class="gallery-item">
@@ -447,10 +518,7 @@ As these are found on various infrastructure in my hometown, I should state that
               src="grafiti_2.png"
               alt="Artwork 10"
               data-title="(No title)"
-              data-description="Practicing grafiti tags 2/2. 
-
-Legal Disclaimer: 
-As these are found on various infrastructure in my hometown, I should state that these are definetly not by me. I found them, was inspired by them and tried to copy them on paper as best I could."
+              data-description="Practicing grafiti tags 2/2. Legal Disclaimer: As these are found on various infrastructure in my hometown, I should state that these are definetly not by me. I found them, was inspired by them and tried to copy them on paper as best I could."
             />
           </div>
           <div class="gallery-item">
@@ -458,10 +526,7 @@ As these are found on various infrastructure in my hometown, I should state that
               src="grafiti_3.png"
               alt="Artwork 10"
               data-title="(No title)"
-              data-description="Practicing large grafiti tags 1/2. 
-
-Legal Disclaimer: 
-As these are found on various infrastructure in my hometown, I should state that these are definetly not by me. I found them, was inspired by them and tried to copy them on paper as best I could."
+              data-description="Practicing large grafiti tags 1/2. Legal Disclaimer: As these are found on various infrastructure in my hometown, I should state that these are definetly not by me. I found them, was inspired by them and tried to copy them on paper as best I could."
             />
           </div>
           <div class="gallery-item">
@@ -469,10 +534,7 @@ As these are found on various infrastructure in my hometown, I should state that
               src="grafiti_4.png"
               alt="Artwork 10"
               data-title="(No title)"
-              data-description="Practicing large grafiti tags 2/2. 
-
-Legal Disclaimer: 
-As these are found on various infrastructure in my hometown, I should state that these are definetly not by me. I found them, was inspired by them and tried to copy them on paper as best I could."
+              data-description="Practicing large grafiti tags 2/2. Legal Disclaimer: As these are found on various infrastructure in my hometown, I should state that these are definetly not by me. I found them, was inspired by them and tried to copy them on paper as best I could."
             />
           </div>
           <div class="gallery-item">
@@ -480,8 +542,7 @@ As these are found on various infrastructure in my hometown, I should state that
               src="collage_1.png"
               alt="Artwork 10"
               data-title="(No title)"
-              data-description="Print Collage of Coca Cola cans.
-Study on the print collages of Andy Warhol (1/2)."
+              data-description="Print Collage of Coca Cola cans. Study on the print collages of Andy Warhol (1/2)."
             />
           </div>
           <div class="gallery-item">
@@ -489,8 +550,7 @@ Study on the print collages of Andy Warhol (1/2)."
               src="collage_2.png"
               alt="Artwork 10"
               data-title="(No title)"
-              data-description="Print Collage of Coca Cola cans.
-Study on the print collages of Andy Warhol (2/2)."
+              data-description="Print Collage of Coca Cola cans. Study on the print collages of Andy Warhol (2/2)."
             />
           </div>
           <div class="gallery-item">
@@ -498,8 +558,7 @@ Study on the print collages of Andy Warhol (2/2)."
               src="design_1.png"
               alt="Artwork 10"
               data-title="(No title)"
-              data-description="Design idea for a T-shirt. 
-I actually created a lot of designs like this (even printed some of them on actual fabric)."
+              data-description="Design idea for a T-shirt. I actually created a lot of designs like this (even printed some of them on actual fabric)."
             />
           </div>
           <div class="gallery-item">
@@ -534,21 +593,46 @@ I actually created a lot of designs like this (even printed some of them on actu
               data-description="Charcoal drawing, study on realistic portraits 2/2."
             />
           </div>
+        </div>
       </section>
 
-      <!-- ABOUT SECTION (CENTERED BOTTOM) -->
+      <section class="section-text artwork-text-block">
+        <p>Shown above are pictures of some old paintings and drawings I did.</p>
+        <p>I like to emerge into the styles of different artists, a lot of what is shown are essentially 'case studies'.</p>
+        <p>In these, intentional or accidental variation then produces something interesting sometimes.</p>
+        <p>If not, I aim to experiment with and learn different mediums and techniques.</p>
+      </section>
+
+      <div class="section-heading">Filmmaking</div>
+      <section class="video-section">
+        <div class="video-wrapper">
+          <div
+            class="video-thumb"
+            id="videoThumb"
+            data-video-id="VFag6pGX_3g"
+            style="background-image: url('https://img.youtube.com/vi/VFag6pGX_3g/hqdefault.jpg');"
+          >
+            <div class="video-play-button"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-text video-text-block">
+        <p>This video shows some experimentation with methods from fluid-painting.</p>
+        <p>By filming instead of letting the colours dry on a canvas, all of the dynamics up until the finished 'end result' are captured.</p>
+        <p>In this way, the abstract visual spaces of this art form are experienced from a 'new angle'.</p>
+        <p>Close-up shots and camera movement are used to further enhance the immersiveness of these spaces.</p>
+      </section>
+
       <section id="about" class="about-section">
         <div class="about-heading">About</div>
-        <p>Hello!</p>
-        <p>I'm a 22 year old physics student from Wolfsburg, currently based in Heidelberg.</p>
-        <p>This page is simply a way for me to digitize and collect some of my artwork.</p>
-        <p>[Legal Disclaimer: The showcased pieces are not for sale.]</p>
-      </section>
+        <p>This portfolio is for me to digitize and collect some of my creative works.</p>
+        <p>The site is purely personal and does not process user data or utilize analysis tools.</p>
+        <p>Nothing shown is advertised or for sale. I don't take contract work.</p>
+            </section>
 
     </div>
   </main>
-
-  <!-- LIGHTBOX (unchanged, keep your full script) -->
 
   <div class="lightbox" id="lightbox">
     <div class="lightbox-inner">
@@ -570,7 +654,6 @@ I actually created a lot of designs like this (even printed some of them on actu
     </div>
   </div>
 
-  <!-- SCRIPT (unchanged) -->
   <script>
     (function () {
       const lightbox = document.getElementById("lightbox");
@@ -588,6 +671,13 @@ I actually created a lot of designs like this (even printed some of them on actu
       const minZoom = 1;
       const maxZoom = 3;
       const zoomStep = 0.25;
+
+      // For panning
+      let isPanning = false;
+      let startX = 0;
+      let startY = 0;
+      let scrollLeft = 0;
+      let scrollTop = 0;
 
       function applyZoom() {
         lightboxImage.style.transform = `scale(${currentZoom})`;
@@ -655,8 +745,63 @@ I actually created a lot of designs like this (even printed some of them on actu
         event.stopPropagation();
         resetZoom();
       });
+
+      // --- PANNING WITH MOUSE ---
+      lightboxImage.addEventListener("mousedown", function (e) {
+        if (currentZoom <= 1) return;
+        isPanning = true;
+        lightboxImage.style.cursor = "grabbing";
+        startX = e.clientX;
+        startY = e.clientY;
+        scrollLeft = lightboxMedia.scrollLeft;
+        scrollTop = lightboxMedia.scrollTop;
+        e.preventDefault();
+      });
+
+      window.addEventListener("mousemove", function (e) {
+        if (!isPanning) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        lightboxMedia.scrollLeft = scrollLeft - dx;
+        lightboxMedia.scrollTop = scrollTop - dy;
+      });
+
+      window.addEventListener("mouseup", function () {
+        if (!isPanning) return;
+        isPanning = false;
+        if (currentZoom > 1) {
+          lightboxImage.style.cursor = "grab";
+        } else {
+          lightboxImage.style.cursor = "default";
+        }
+      });
+
+      // --- PANNING WITH TOUCH ---
+      lightboxImage.addEventListener("touchstart", function (e) {
+        if (currentZoom <= 1) return;
+        const touch = e.touches[0];
+        isPanning = true;
+        startX = touch.clientX;
+        startY = touch.clientY;
+        scrollLeft = lightboxMedia.scrollLeft;
+        scrollTop = lightboxMedia.scrollTop;
+      }, { passive: false });
+
+      lightboxImage.addEventListener("touchmove", function (e) {
+        if (!isPanning) return;
+        const touch = e.touches[0];
+        const dx = touch.clientX - startX;
+        const dy = touch.clientY - startY;
+        lightboxMedia.scrollLeft = scrollLeft - dx;
+        lightboxMedia.scrollTop = scrollTop - dy;
+        e.preventDefault();
+      }, { passive: false });
+
+      window.addEventListener("touchend", function () {
+        isPanning = false;
+      });
+
     })();
   </script>
 </body>
 </html>
-
