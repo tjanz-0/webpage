@@ -605,21 +605,22 @@
 
       <div class="section-heading">Filmmaking</div>
       <section class="video-section">
-        <div class="video-wrapper">
-          <div
-            class="video-thumb"
-            id="videoThumb"
-            data-video-id="VFag6pGX_3g"
-            style="background-image: url('https://img.youtube.com/vi/VFag6pGX_3g/hqdefault.jpg');"
-          >
-            <div class="video-play-button"></div>
-          </div>
-        </div>
-      </section>
+  <div class="video-wrapper" style="padding-top: 0; height: auto;">
+    <video
+      controls
+      preload="metadata"
+      style="width: 100%; height: auto; display: block; border-radius: 4px; box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);"
+    >
+      <source src="no_title.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</section>
+
 
       <section class="section-text video-text-block">
         <p>This video shows some experimentation with methods from fluid-painting.</p>
-        <p>By filming instead of letting the colours dry on a canvas, all of the dynamics up until the finished 'end result' are captured.</p>
+        <p>By filming the colors, all of the dynamics up until the finished 'end result' are captured.</p>
         <p>In this way, the abstract visual spaces of this art form are experienced from a 'new angle'.</p>
         <p>Close-up shots and camera movement are used to further enhance the immersiveness of these spaces.</p>
       </section>
@@ -801,26 +802,7 @@
         isPanning = false;
       });
 
-      // --- YOUTUBE THUMB CLICK -> IFRAME ---
-      const videoThumb = document.getElementById("videoThumb");
 
-      if (videoThumb) {
-        videoThumb.addEventListener("click", function () {
-          const videoId = this.dataset.videoId;
-          const iframe = document.createElement("iframe");
-
-          iframe.className = "video-iframe";
-          iframe.src = "https://www.youtube.com/embed/" + videoId +
-                       "?autoplay=1&rel=0";
-          iframe.title = "YouTube video player";
-          iframe.allow =
-            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-          iframe.allowFullscreen = true;
-
-          // replace the thumbnail with the iframe
-          this.parentNode.replaceChild(iframe, this);
-        });
-      }
 
     })();
   </script>
