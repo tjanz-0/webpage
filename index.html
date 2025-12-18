@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thorge Janz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Personal website, digital portfolio, CV and current projects.">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui,
+        sans-serif;
+      background: #ffffff;
+      color: #222222;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 110px auto 60px;
+      padding: 0 20px;
+    }
+
+    .header {
+      margin-bottom: 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 112px;
+    }
+
+    .name {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #777777;
+      margin-bottom: 8px;
+    }
+
+    .section {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      column-gap: 32px;
+      margin-bottom: 24px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      text-transform: lowercase;
+      color: #aaaaaa;
+      text-align: right;
+      padding-top: 3px;
+      white-space: nowrap;
+    }
+
+    .section-label::before {
+      content: "/";
+    }
+
+    .section-body {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #444444;
+    }
+
+    .section-body a {
+      color: #000000;
+      text-decoration: underline;
+      font-weight: 400;
+    }
+
+    .signature {
+      font-size: 14px;
+      margin-top: 16px;
+      color: #444444;
+    }
+
+    .buttons {
+      margin-top: 18px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border-radius: 4px;
+      border: 1px solid #d8d8d8;
+      padding: 8px 16px;
+      font-size: 14px;
+      background: #f9f9f9;
+      cursor: pointer;
+      text-decoration: none;
+      color: #111111;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s ease, border-color 0.15s ease,
+                  box-shadow 0.15s ease;
+      font-weight: 400;
+    }
+
+    .btn img {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    .btn:hover {
+      background: #f1f1f1;
+      border-color: #cfcfcf;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    footer .section-label::before {
+      content: "" !important;
+    }
+
+    .footer {
+      margin-top: 50px;
+      font-size: 12px;
+      color: #aaaaaa;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-end;
+      position: relative;
+      margin-left: 112px;
+      padding-right: 180px;
+    }
+
+    .signature-img {
+      width: 130px;
+      opacity: 0.99;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+
+
+.footer a {
+  color: #aaaaaa;          
+  text-decoration: none;    
+  transition: color 0.2s;
+text-decoration: underline;
+}
+
+.footer a:hover {
+  color: #222222;           
+  text-decoration: underline;
+}
+
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <header class="header">
+      <div class="name">Thorge Janz</div>
+    </header>
+
+    <section class="section">
+      <div class="section-label">about</div>
+      <div class="section-body">
+        Hello there, welcome to my webpage!<div>
+        I'm Thorge and I'm currently at Heidelberg university as a part time
+        student research assistent (and also to attend some lectures for my MSc).<div>
+        I've recently finished my BSc in Physics at the Institute of Computer Engineering here in Heidelberg (with the European Institute for Neuromorphic Computing). Here, I was — and still am — working on introducing differentiability to the software simulation and hardware emulation of non-linear neuron dynamics for multi-compartment models.<div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">projects</div>
+      <div class="section-body">
+        I also work on some of my own projects in my free time.<div>
+        Recently, I conducted a comparison of GARCH vs. Random Forest in the (out-of-sample) forecasting of SOL/USDT daily realized volatility. This and some simulations I did for my bachelor thesis can be found on my <a href="https://github.com/tjanz-0">GitHub</a> page.<div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">interests</div>
+      <div class="section-body">
+        I like to travel and visit new places.<div>
+        I also have some creative hobbies that I follow when I feel like staying at home. For example, I like to paint, make electronic music and edit photos and videos from old projects or vacations that I was on.<div>
+I've recently created a <a href="portfolio/">digital portfolio</a> for my paintings and drawings (which can be found via the button below, if the hyperlink doesn't work). </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">contact</div>
+      <div class="section-body">
+        I'm always interested in meeting new people and 
+        collaborating on any sort of side projects.
+        Wether you are working on something cool and want to collaborate, or just to talk about something; feel free to reach out to me via <a href="mailto:tjanz@tuta.io">email</a> about anything シ
+        <div class="signature">— Thorge</div>
+        
+        <div class="buttons">
+          <a class="btn" href="https://github.com/tjanz-0" target="_blank">
+            <img src="github.png" alt="GitHub" />
+            GitHub
+          </a>
+          <a class="btn" href="mailto:tjanz@tuta.io">
+            <img src="email.png" alt="Email" />
+            Email
+          </a>
+          <a class="btn" href="cv_pdf/" target="_blank">
+            CV
+          </a>
+          <a class="btn" href="portfolio/" target="_blank">
+            Portfolio
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <footer class="footer">
+  <span>
+    © 2025 — All rights reserved.<br />
+    <a href="impressum/">Impressum</a> ·
+    <a href="datenschutz/">Datenschutz</a>
+  </span>
+  <img class="signature-img" src="signature.png" alt="Signature" />
+</footer>
+
+
+
+  </main>
+</body>
+</html>

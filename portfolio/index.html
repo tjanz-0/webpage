@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thorge Janz — Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      color: #111111;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        system-ui, sans-serif;
+    }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .section-heading {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 30px;
+      opacity: 0.6;
+      text-align: center;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+
+      width: 100%;
+      max-width: 1200px;
+      padding: 28px 40px;
+
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(6px);
+    }
+
+    .site-title {
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 11px;
+    }
+
+    .nav-links a {
+      opacity: 0.6;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+    }
+
+    main {
+      padding-top: 100px;
+      padding-bottom: 75px;
+    }
+
+    .content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .work-section {
+      margin-bottom: 60px;
+      margin-top: 40px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 24px;
+      justify-items: center;
+      align-items: flex-start;
+    }
+
+    .gallery-item {
+      width: 100%;
+      max-width: 210px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .gallery-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.25s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.03);
+    }
+
+    .video-section {
+      max-width: 1200px;
+      margin: 0 auto 60px;
+      padding: 0 40px;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding-top: 56.25%;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+      background: #000;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .section-text {
+      font-size: 13px;
+      line-height: 1.4;
+      color: #525252;
+      text-align: left;
+    }
+
+    .artwork-text-block {
+      margin-top: 67px;
+      margin-bottom: 178px;
+      max-width: 720px;
+      margin-left: auto;
+      text-align: left;
+    }
+
+    .video-text-block {
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 78px;
+      margin-bottom: 200px;
+      padding: 0;
+    }
+
+    .video-text-block p {
+      max-width: 650px;
+    }
+
+    #about {
+      max-width: 520px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #444444;
+    }
+	
+    .about-section a {
+      color: #aaaaaa;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+
+    .about-section a:hover {
+      color: #111111;
+    }
+
+    .about-heading {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 18px;
+      opacity: 0.6;
+    }
+
+    .about-section p {
+      margin: 0 0 12px;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 50;
+    }
+
+    .lightbox.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-inner {
+      position: relative;
+      width: auto;           
+      max-width: 95vw;
+      height: auto;          
+      max-height: 90vh;
+      display: flex;
+      align-items: stretch;  
+      gap: 0;                
+      color: #f5f5f5;
+    }
+
+    .lightbox-media {
+      flex: 0 0 auto;        
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      overflow: hidden;      
+    }
+
+    .lightbox-image {
+      display: block;
+      height: 80vh;          
+      width: auto;           
+      max-width: 65vw;       
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      transform-origin: center center;
+      transition: transform 0.1s ease-out;
+    }
+
+    .lightbox-meta {
+      flex: 0 0 320px;       
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0 0 0 32px;   
+    }
+
+    .lightbox-title {
+      font-size: 16px;       
+      font-weight: 700;      
+      margin-bottom: 24px;   
+      line-height: 1.2;
+    }
+
+    .lightbox-description {
+      font-size: 14px;       
+      line-height: 1.5;
+      color: #e0e0e0;
+      white-space: pre-line; 
+      margin-bottom: 24px;
+    }
+
+    .lightbox-details {
+      font-size: 13px;
+      color: #a0a0a0;
+      line-height: 1.6;
+    }
+
+    .zoom-controls {
+      margin-top: 20px;
+      display: inline-flex;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .zoom-button {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 999px;
+      padding: 4px 10px;
+      color: #f5f5f5;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .zoom-button:hover {
+        background: rgba(255,255,255,0.1);
+        border-color: rgba(255,255,255,0.6);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -25px;            
+      left: 0;               
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      color: rgba(255,255,255,0.7);
+      transition: color 0.2s;
+    }
+
+    .lightbox-close:hover {
+      color: #fff;
+    }
+
+    @media (max-width: 1024px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .site-header {
+        padding: 20px 18px;
+      }
+
+      .content {
+        padding: 0 18px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      main {
+        padding-top: 96px;
+      }
+
+      .lightbox-inner {
+        flex-direction: column;
+        width: 90vw;
+        height: 85vh;
+        max-height: none;
+        align-items: center;
+      }
+      
+      .lightbox-media {
+        width: 100%;
+        height: auto;
+        flex: 1; 
+      }
+
+      .lightbox-image {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        object-fit: contain;
+      }
+
+      .lightbox-meta {
+        width: 100%;
+        flex: 0 0 auto;
+        padding: 20px 0 0 0;
+        text-align: left;
+      }
+      
+      .lightbox-close {
+          top: -30px;
+          left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="site-title">THORGE JANZ</div>
+
+    <nav class="nav-links">
+      <a href="../index.html">home</a>
+      <a href="#about">about</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content">
+
+      <div class="section-heading">Paintings, Designs & Drawings</div>
+      <section id="work" class="work-section">
+        <div class="gallery-grid">
+          
+          <div class="gallery-item">
+            <img
+              src="bild_1.jpg"
+              alt="Artwork 1"
+              data-title="(No title)"
+              data-dimensions="30 x 21 cm"
+              data-medium="Oil pastels on canvas"
+              data-description="A study of Café Hotel de L'Europe by Max Beckmann. I painted the two figures most prominent in the original painting in a slightly varied composition and color scheme. I also adopted a white pillar from the reference, which is placed on either side of the composition. This achieves the effect of observing the scene through a window, which the reference utilizes as well. In contrast to the reference, I chose a neutral background in order to put more emphasis towards the two portrayed figures."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_2.png"
+              alt="Artwork 2"
+              data-title="(No title)"
+              data-dimensions="21 x 19 cm"
+              data-medium="Acrylic paint on paper"
+              data-description="Still life of two avocado halfs on a plate. The avocados are based on a reference image that I found on the internet. The intention behind the painting was to practice expressionistic still lifes. I also wanted to experiment with different degrees of detail, for which I tried to follow realistic lighting and texture on the seed and contrast it with quick and visible strokes from a graphite pencil."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_3.png"
+              alt="Artwork 3"
+              data-title="Horse with a crate of beer"
+              data-dimensions="120 x 90 cm"
+              data-medium="Oil paint on canvas"
+              data-description="Huge oil painting of a horse next to a crate of beer. For this painting, I combined the horse from Franz Marc's ''Der blaue Reiter'' with a german crate of beer in front of an abstract background. This is of course a bit comical, but in the same way makes the composition interesting to look at. The painting was a housewarming gift for my sister and her boyfriend. Although the process of painting this took much longer than anticipated, I enjoyed every minute of working on it. Besides this, I like the painting because it breaks the classyness accredited to the 'Franz Marc Horse'. It puts it into an environment where you feel much less pretentious when looking at it for longer periods of time."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_4.png"
+              alt="Artwork 4"
+              data-title="(No title)"
+              data-dimensions="34 x 29 cm"
+              data-medium="Acrylic paint on paper"
+              data-description="Still life of a candle, some red wine and fruits. One of my first attempts to paint from real life subjects. I set up the composition as shown with real props and painted it. With this painting, I aimed to train the use of expressionistic stylistic devices in order to convey for example the dancing light of the candle or the blurry jittering of the dark background. In alignment with this, I tried to keep brush strokes dynamic and distinctively visible. In some places, the paper background pushes through. On the table cloth, some of the purple lines are more grainy than others, aiming to convey texture."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_5.png"
+              alt="Artwork 5"
+              data-title="(No title)"
+              data-dimensions="30 x 21 cm"
+              data-medium="Oil colors on canvas paper"
+              data-description="Still life of an apple, a bottle and some flowers. A study of cubist painters. With this painting, I experimented with the cubist method of capturing objects from different angles. For this, I set up the composition as described, started to copy some lines from one perspective, then changed it and repeated this process over some iterations. In the finsihed result, this had more effect on background elements than the objects themselves. This could probably be counteracted by copying less object lines in each perspective or by utilizing narrower brush strokes. In some places, I used the lines I copied from the composition to create some cartoonic effects, which introduce some movement to the composition. As most of the painting is rather dark, I used very bright highlights for contrast."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_8.png"
+              alt="Artwork 8"
+              data-title="(No title)"
+              data-dimensions="29 x 22 cm"
+              data-medium="Acrylic paint on paper"
+              data-description="Still life of apples on a white tables cloth. Painted from a reference image that I found on the internet. Another practice of painting expressionistic still lifes."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_9.png"
+              alt="Artwork 9"
+              data-title="(No title)"
+              data-dimensions="21 x 30 cm"
+              data-medium="Acrylic paint on paper"
+              data-description="Still life of a knife and pears on a plate. Also painted from a reference image that I found on the internet. For some reason, I didn't finish painting the black background (how it ended up looking wasn't on purpose). "
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_12.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="21 x 30 cm"
+              data-medium="Acrylic paint on paper"
+              data-description="Still life of some blood oranges on a staircase. For reference images for the fruits I again consulted Google."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_11.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="20 x 21 cm"
+              data-medium="Oil painting on canvas paper"
+              data-description="Painting of a green apple. This was one of my first times trying to paint with oil colors, I probably used this to test blocking in colors and painting over them. I'm also unsure wether or not I used acrylic colors on top for details or why I left the white highlights at the stem like this."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="bild_13.png"
+              alt="Artwork 10"
+              data-title="Bedroom in Noa Island Retreat, Zrće Beach"
+              data-dimensions="29 x 21 cm"
+              data-medium="Charcoal on paper"
+              data-description="Charcoal sketching of my room in Noa Island in Zrće Beach, Croatia, when I was there in terms of my high school graduation trip."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="skizze_1.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="15 x 9 cm"
+              data-medium="Charcoal on paper"
+              data-description="Abstract charcoal portrait, part 1/4 on a series on abstract people depictions. All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, which I used in order to study how to create expressionistic depictions of people like this."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="skizze_2.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="15 x 9 cm"
+              data-medium="Charcoal on paper"
+              data-description="Abstract charcoal portrait, part 2/4 on a series on abstract people depictions. All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, which I used in order to study how to create expressionistic depictions of people like this."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="skizze_3.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="15 x 9 cm"
+              data-medium="Charcoal on paper"
+              data-description="Abstract charcoal portrait, part 3/4 on a series on abstract people depictions. All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, which I used in order to study how to create expressionistic depictions of people like this."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="skizze_4.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="15 x 9 cm"
+              data-medium="Charcoal on paper"
+              data-description="Abstract charcoal portrait, part 4/4 on a series on abstract people depictions. All drawings from this series are a study of an artist I found on the internet (I sadly can't remember the name). Compositions of this series are copied, which I used in order to study how to create expressionistic depictions of people like this."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="portrait_11.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="20 x 15 cm"
+              data-medium="Charcoal on paper"
+              data-description="Study on realistic charcoal drawings 1/2. Shown is a male torso. I also started to sketch the head, but then reverted."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="portrait_21.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="20 x 20 cm"
+              data-medium="Charcoal on paper"
+              data-description="Portrait of a male face, study on realistic charcoal drawings 2/2. Contrary to the first sketch of this series, I used charcoal pencils instead of raw charcoal sticks. Both were some of my first times testing out charcoal for drawing, so naturally some experimentation was needed to find out which of these work best for what use cases."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="color_skizze_4.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="29 x 21 cm"
+              data-medium="Watercolors and pencil on paper"
+              data-description="Study on abstract portraits. Being heavily inspired by an artist I found on the internet, I both tried to copy some compositions that I liked as well as creating some of my own by variation of perspective and color. This type of portrait helps a lot in training the ability to come up with motives without relying on an exact reference. You can first block in some colors without putting too much thought into it, then draw in the features you imagine to see in these with a pencil."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="grafiti_3.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="29 x 21 cm"
+              data-medium="Permanent marker on paper"
+              data-description="Practicing large grafiti tags 1/2.&#10;&#10;Disclaimer:&#10;These are inspired from actual graffiti tags that I found in my hometown. I don't have any affiliation with the actual graffiti. Upon finding designs I like, I try to copy them on paper as best I can for the sole purpose of learning/ immersing in the art format."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="grafiti_4.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="29 x 21 cm"
+              data-medium="Permanent marker on paper"
+              data-description="Practicing large grafiti tags 2/2.&#10;&#10;Disclaimer:&#10;These are inspired from actual graffiti tags that I found in my hometown. I don't have any affiliation with the actual graffiti. Upon finding designs I like, I try to copy them on paper as best I can for the sole purpose of learning/ immersing in the art format."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="design_1.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="27 x 21 cm"
+              data-medium="Pencil on paper"
+              data-description="Design idea for a T-shirt. I enjoy creating these warped text designs and have incoorporated them in various artworks I did (especially back when I was doing a lot of digital designs in Photoshop). This fascination was inspired by early album cover designs from @j.s.artworks. I also adopted a lot of other elements from his designs into many other of my own works. A digital portfolio of his is showcased on his Intagram page."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="grafiti_1.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="21 x 26 cm"
+              data-medium="Permanent marker on paper"
+              data-description="Practicing small grafiti tags 1/2.&#10;&#10;Disclaimer:&#10;These are inspired from actual graffiti tags that I found in my hometown. I don't have any affiliation with the actual graffiti. Upon finding designs I like, I try to copy them on paper as best I can for the sole purpose of learning/ immersing in the art format."
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="grafiti_2.png"
+              alt="Artwork 10"
+              data-title="(No title)"
+              data-dimensions="21 x 29 cm"
+              data-medium="Permanent marker on paper"
+              data-description="Practicing small grafiti tags 2/2.&#10;&#10;Disclaimer:&#10;These are inspired from actual graffiti tags that I found in my hometown. I don't have any affiliation with the actual graffiti. Upon finding designs I like, I try to copy them on paper as best I can for the sole purpose of learning/ immersing in the art format."
+            />
+          </div>
+
+        </div>
+      </section>
+
+      <section class="section-text artwork-text-block">
+        <p>The digitization of my old paintings and drawings is an ongoing work in progress.</p>
+        <p>I aim to continously improve this showcase by new additions, better photographs, improved website functionality and so on.</p>
+        <p>Regarding the artworks: I like to emerge into the styles of different artists, a lot of what is shown are essentially 'case studies'.</p>
+        <p>For some of the artworks, I didn't come up with some of the showcased motives myself — I try to convey 'what comes from where' in the image descriptions.</p>
+        <p>In general, I found that I prefer working with some sort of a reference.</p>
+        <p>I enjoy studying artists, places and objects much more than I do painting 'from nothing'.</p>
+      </section>
+
+      <div class="section-heading">Filmmaking</div>
+      <section class="video-section">
+        <div class="video-wrapper" style="padding-top: 0; height: auto;">
+          <video
+            controls
+            preload="metadata"
+            style="width: 100%; height: auto; display: block; border-radius: 4px; box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);"
+          >
+            <source src="no_title.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </section>
+
+      <section class="section-text video-text-block">
+        <p>The aim behind this video was to explore fluid-painting from a different perspective.</p>
+        <p>Contrary to the static works on canvas, video-recording allows to capture the dynamics of the observed flow of colors, not just a snapshot of them in time.</p>
+        <p>In this way, the abstract spaces forming can be explored with more dimensionality.</p>
+        <p>Close-up shots and camera movements are used to enhance the immersiveness of these spaces.</p>
+        <p>Don't mind the spelling error in the beginning, I lost the Premiere file to this project and had to help myself in this way.</p>
+      </section>
+
+      <section id="about" class="about-section">
+        <div class="about-heading">About</div>
+        <p>This portfolio is for me to digitize and collect some of my creative works.</p>
+        <p>As of now, I neither offer any of my works for sale, nor take contract work.</p>
+        <p>
+          <span>
+            <a href="../impressum/">Impressum</a> ·
+            <a href="../datenschutz/">Datenschutz</a>
+          </span>
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-inner">
+      <span class="lightbox-close" id="lightboxClose">close</span>
+      <div class="lightbox-media" id="lightboxMedia">
+        <img src="" class="lightbox-image" id="lightboxImage" />
+      </div>
+      <div class="lightbox-meta">
+        <div>
+          <div class="lightbox-title" id="lightboxTitle"></div>
+          <div class="lightbox-description" id="lightboxDescription"></div>
+          <div class="lightbox-details" id="lightboxDetails"></div>
+        </div>
+        <div class="zoom-controls">
+          <button class="zoom-button" id="zoomOut">− zoom out</button>
+          <button class="zoom-button" id="zoomReset">reset</button>
+          <button class="zoom-button" id="zoomIn">+ zoom in</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImage = document.getElementById("lightboxImage");
+      const lightboxClose = document.getElementById("lightboxClose");
+      const lightboxTitle = document.getElementById("lightboxTitle");
+      const lightboxDetails = document.getElementById("lightboxDetails");
+      const lightboxDescription = document.getElementById("lightboxDescription");
+      const lightboxMedia = document.getElementById("lightboxMedia");
+
+      const zoomInBtn = document.getElementById("zoomIn");
+      const zoomOutBtn = document.getElementById("zoomOut");
+      const zoomResetBtn = document.getElementById("zoomReset");
+
+      let currentZoom = 1;
+      const minZoom = 1;
+      const maxZoom = 3;
+      const zoomStep = 0.25;
+
+      let isPanning = false;
+      let startX = 0;
+      let startY = 0;
+      let scrollLeft = 0;
+      let scrollTop = 0;
+
+      function applyZoom() {
+        lightboxImage.style.transform = `scale(${currentZoom})`;
+        if (currentZoom > 1) {
+          lightboxMedia.style.overflow = "auto";
+          lightboxImage.style.cursor = "grab";
+        } else {
+          lightboxMedia.scrollTop = 0;
+          lightboxMedia.scrollLeft = 0;
+          lightboxMedia.style.overflow = "hidden";
+          lightboxImage.style.cursor = "default";
+        }
+      }
+
+      function resetZoom() {
+        currentZoom = 1;
+        applyZoom();
+      }
+
+      document.addEventListener("click", function (event) {
+        const img = event.target.closest(".gallery-item img");
+        if (!img) return;
+
+        lightboxImage.src = img.src;
+        lightboxTitle.textContent = img.dataset.title || img.alt || "";
+        lightboxDescription.textContent = img.dataset.description || "";
+
+        const dims = img.dataset.dimensions || "";
+        const med = img.dataset.medium || "";
+        
+        let detailsHtml = "";
+        if (dims) detailsHtml += `${dims}<br>`;
+        if (med) detailsHtml += `${med}`;
+        
+        lightboxDetails.innerHTML = detailsHtml;
+
+        resetZoom();
+        lightbox.classList.add("is-visible");
+        document.body.classList.add("no-scroll");
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove("is-visible");
+        lightboxImage.src = "";
+        document.body.classList.remove("no-scroll");
+      }
+
+      lightboxClose.addEventListener("click", function (event) {
+        event.stopPropagation();
+        closeLightbox();
+      });
+
+      lightbox.addEventListener("click", function (event) {
+        if (event.target === lightbox) closeLightbox();
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") closeLightbox();
+      });
+
+      zoomInBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        currentZoom = Math.min(maxZoom, currentZoom + zoomStep);
+        applyZoom();
+      });
+
+      zoomOutBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        currentZoom = Math.max(minZoom, currentZoom - zoomStep);
+        applyZoom();
+      });
+
+      zoomResetBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        resetZoom();
+      });
+
+      lightboxImage.addEventListener("mousedown", function (e) {
+        if (currentZoom <= 1) return;
+        isPanning = true;
+        lightboxImage.style.cursor = "grabbing";
+        startX = e.clientX;
+        startY = e.clientY;
+        scrollLeft = lightboxMedia.scrollLeft;
+        scrollTop = lightboxMedia.scrollTop;
+        e.preventDefault();
+      });
+
+      window.addEventListener("mousemove", function (e) {
+        if (!isPanning) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        lightboxMedia.scrollLeft = scrollLeft - dx;
+        lightboxMedia.scrollTop = scrollTop - dy;
+      });
+
+      window.addEventListener("mouseup", function () {
+        if (!isPanning) return;
+        isPanning = false;
+        if (currentZoom > 1) {
+          lightboxImage.style.cursor = "grab";
+        } else {
+          lightboxImage.style.cursor = "default";
+        }
+      });
+
+      lightboxImage.addEventListener("touchstart", function (e) {
+        if (currentZoom <= 1) return;
+        const touch = e.touches[0];
+        isPanning = true;
+        startX = touch.clientX;
+        startY = touch.clientY;
+        scrollLeft = lightboxMedia.scrollLeft;
+        scrollTop = lightboxMedia.scrollTop;
+      }, { passive: false });
+
+      lightboxImage.addEventListener("touchmove", function (e) {
+        if (!isPanning) return;
+        const touch = e.touches[0];
+        const dx = touch.clientX - startX;
+        const dy = touch.clientY - startY;
+        lightboxMedia.scrollLeft = scrollLeft - dx;
+        lightboxMedia.scrollTop = scrollTop - dy;
+        e.preventDefault();
+      }, { passive: false });
+
+      window.addEventListener("touchend", function () {
+        isPanning = false;
+      });
+    })();
+  </script>
+</body>
+</html>
